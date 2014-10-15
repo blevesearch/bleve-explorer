@@ -1,0 +1,7 @@
+<ul class="nav nav-tabs" role="tablist">
+  <li ng-attr-class="{{tab == 'summary' && 'active' || 'inactive' }}"><a href="/indexes/{{indexName}}">Summary</a></li>
+  <li ng-attr-class="{{tab == 'mapping' && 'active' || 'inactive' }}"><a href="/indexes/{{indexName}}/mapping">Mapping</a></li>
+  <li ng-attr-class="{{tab == 'query' && 'active' || 'inactive' }}"><a href="/indexes/{{indexName}}/query">Query</a></li>
+  <li ng-attr-class="{{tab == 'indexDoc' && 'active' || 'inactive' }}"><a href="/indexes/{{indexName}}/indexDoc">Index Document</a></li>
+  <li ng-attr-class="{{tab == 'deleteDoc' && 'active' || 'inactive' }}"><a href="/indexes/{{indexName}}/deleteDoc">Delete Document</a></li>
+</ul>

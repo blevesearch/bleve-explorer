@@ -1,0 +1,14 @@
+<br/>
+<form class="form-horizontal" role="form">
+  <div class="form-group">
+    <label for="inputID" class="col-sm-2 control-label">Identifier</label>
+    <div class="col-sm-10">
+      <input ng-model="docID" type="text" class="form-control" id="inputID" placeholder="identifier">
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button ng-click="deleteDocument(docID)" type="submit" class="btn btn-danger">Delete</button>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,20 @@
+<br/>
+<form class="form-horizontal" role="form">
+  <div class="form-group">
+    <label for="inputID" class="col-sm-2 control-label">Identifier</label>
+    <div class="col-sm-10">
+      <input ng-model="docID" type="text" class="form-control" id="inputID" placeholder="identifier">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="inputDoc" class="col-sm-2 control-label">Document</label>
+    <div class="col-sm-10">
+      <textarea ng-model="docBody" id="inputDoc" class="form-control" rows="10"></textarea>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button ng-click="indexDocument(docID, docBody)" type="submit" class="btn btn-default">Index</button>
+    </div>
+  </div>
+</form>
