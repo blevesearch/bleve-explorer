@@ -9,6 +9,8 @@ An example app providing an HTTP/REST/JSON front-end to bleve.  It provides a RE
 * query indexes
 * monitor system performance
 
+Watch a [video introduction](https://www.youtube.com/watch?v=DfbRTXE5n4Y) to bleve-explorer.
+
 ## Building
 
         go build -tags full
@@ -21,6 +23,33 @@ The ```-tags full``` is optional, but includes all the optional components of bl
         ./bleve-explorer
 
 This will use the default "data" dir for storing indexes.  Once started you can access the web UI at http://localhost:8095/
+
+## REST API
+
+Bleve explorer uses the handlers provided by the  bleve.http package.  The handlers are attached to the following URLs:
+
+* PUT /api/{indexName} - create new index
+* GET /api/{indexName} - get index details
+* DELETE /api/{indexName} - delete index
+* GET /api - list indexes
+* PUT /api/{indexName}/{docID} - index document
+* GET /api/{indexName}/_count - count documents in index
+* GET /api/{indexName}/{docID} - return stored fields of document
+* DELETE /api/{indexName}/{docID} - delete document
+* POST /api/{indexName}/_search - search index
+* GET /api/{indexName}/_fields - list fields used by documents in index
+* GET /api/{indexName}/{docID}/_debug - return rows in index related to document
+
+## Script to load documents
+
+In the [video introduction](https://www.youtube.com/watch?v=DfbRTXE5n4Y) to bleve-explorer I ran a script to load a directory of JSON documents.  Here is that script:
+
+		#!/bin/bash
+
+		for JsonFile in  *.json
+		do
+			curl -X PUT http://localhost:8095/api/beer-search/$JsonFile -d @$JsonFile
+		done
 
 ## Screenshots
 
