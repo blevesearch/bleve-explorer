@@ -58,7 +58,7 @@ func main() {
 	router := staticFileRouter()
 
 	// add the API
-	createIndexHandler := bleveHttp.NewCreateIndexHander(*dataDir)
+	createIndexHandler := bleveHttp.NewCreateIndexHandler(*dataDir)
 	router.Handle("/api/{indexName}", createIndexHandler).Methods("PUT")
 
 	getIndexHandler := bleveHttp.NewGetIndexHandler()
@@ -67,7 +67,7 @@ func main() {
 	deleteIndexHandler := bleveHttp.NewDeleteIndexHandler(*dataDir)
 	router.Handle("/api/{indexName}", deleteIndexHandler).Methods("DELETE")
 
-	listIndexesHandler := bleveHttp.NewListIndexesHander()
+	listIndexesHandler := bleveHttp.NewListIndexesHandler()
 	router.Handle("/api", listIndexesHandler).Methods("GET")
 
 	docIndexHandler := bleveHttp.NewDocIndexHandler("")
