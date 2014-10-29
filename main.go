@@ -91,6 +91,9 @@ func main() {
 	debugHandler := bleveHttp.NewDebugDocumentHandler("")
 	router.Handle("/api/{indexName}/{docID}/_debug", debugHandler).Methods("GET")
 
+	aliasHandler := bleveHttp.NewAliasHandler()
+	router.Handle("/api/_aliases", aliasHandler).Methods("POST")
+
 	// start the HTTP server
 	http.Handle("/", router)
 	log.Printf("Listening on %v", *bindAddr)
