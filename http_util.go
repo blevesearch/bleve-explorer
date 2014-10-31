@@ -60,3 +60,15 @@ func RewriteURL(to string, h http.Handler) http.Handler {
 		h.ServeHTTP(w, r)
 	})
 }
+
+func muxVariableLookup(req *http.Request, name string) string {
+	return mux.Vars(req)[name]
+}
+
+func docIDLookup(req *http.Request) string {
+	return muxVariableLookup(req, "docID")
+}
+
+func indexNameLookup(req *http.Request) string {
+	return muxVariableLookup(req, "indexName")
+}

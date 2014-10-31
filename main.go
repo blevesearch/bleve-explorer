@@ -59,36 +59,50 @@ func main() {
 
 	// add the API
 	createIndexHandler := bleveHttp.NewCreateIndexHandler(*dataDir)
+	createIndexHandler.IndexNameLookup = indexNameLookup
 	router.Handle("/api/{indexName}", createIndexHandler).Methods("PUT")
 
 	getIndexHandler := bleveHttp.NewGetIndexHandler()
+	getIndexHandler.IndexNameLookup = indexNameLookup
 	router.Handle("/api/{indexName}", getIndexHandler).Methods("GET")
 
 	deleteIndexHandler := bleveHttp.NewDeleteIndexHandler(*dataDir)
+	deleteIndexHandler.IndexNameLookup = indexNameLookup
 	router.Handle("/api/{indexName}", deleteIndexHandler).Methods("DELETE")
 
 	listIndexesHandler := bleveHttp.NewListIndexesHandler()
 	router.Handle("/api", listIndexesHandler).Methods("GET")
 
 	docIndexHandler := bleveHttp.NewDocIndexHandler("")
+	docIndexHandler.IndexNameLookup = indexNameLookup
+	docIndexHandler.DocIDLookup = docIDLookup
 	router.Handle("/api/{indexName}/{docID}", docIndexHandler).Methods("PUT")
 
 	docCountHandler := bleveHttp.NewDocCountHandler("")
+	docCountHandler.IndexNameLookup = indexNameLookup
 	router.Handle("/api/{indexName}/_count", docCountHandler).Methods("GET")
 
 	docGetHandler := bleveHttp.NewDocGetHandler("")
+	docGetHandler.IndexNameLookup = indexNameLookup
+	docGetHandler.DocIDLookup = docIDLookup
 	router.Handle("/api/{indexName}/{docID}", docGetHandler).Methods("GET")
 
 	docDeleteHandler := bleveHttp.NewDocDeleteHandler("")
+	docDeleteHandler.IndexNameLookup = indexNameLookup
+	docDeleteHandler.DocIDLookup = docIDLookup
 	router.Handle("/api/{indexName}/{docID}", docDeleteHandler).Methods("DELETE")
 
 	searchHandler := bleveHttp.NewSearchHandler("")
+	searchHandler.IndexNameLookup = indexNameLookup
 	router.Handle("/api/{indexName}/_search", searchHandler).Methods("POST")
 
 	listFieldsHandler := bleveHttp.NewListFieldsHandler("")
+	listFieldsHandler.IndexNameLookup = indexNameLookup
 	router.Handle("/api/{indexName}/_fields", listFieldsHandler).Methods("GET")
 
 	debugHandler := bleveHttp.NewDebugDocumentHandler("")
+	debugHandler.IndexNameLookup = indexNameLookup
+	debugHandler.DocIDLookup = docIDLookup
 	router.Handle("/api/{indexName}/{docID}/_debug", debugHandler).Methods("GET")
 
 	aliasHandler := bleveHttp.NewAliasHandler()
