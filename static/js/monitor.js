@@ -61,10 +61,12 @@ function MonitorCtrl($scope, $http, $routeParams, $log, $sce, expvar) {
 
 	function monitorIndex(name) {
 		$log.info("start monitoring index: " + name);
+		nameSelector = name.replace(".", "_")
+
 		idx = {
 			metrics: [
 				{
-					name: name+"updates",
+					name: nameSelector+"updates",
 					display: "Updates",
 					path: "/bleve_explorer/indexes/" + name  + "/index/updates",
 					type: "rate",
@@ -74,7 +76,7 @@ function MonitorCtrl($scope, $http, $routeParams, $log, $sce, expvar) {
 					yformatter: intFormatter
 				},
 				{
-					name: name+"deletes",
+					name: nameSelector+"deletes",
 					display: "Deletes",
 					path: "/bleve_explorer/indexes/"+ name  +"/index/deletes",
 					type: "rate",
@@ -84,19 +86,19 @@ function MonitorCtrl($scope, $http, $routeParams, $log, $sce, expvar) {
 					yformatter: intFormatter
 				},
 				{
-					name: name+"indexanalysistime",
+					name: nameSelector+"indexanalysistime",
 					display: "Analysis/Index Time",
 					series: [
 						{
 							display: "Index",
-							name: name+"indextime",
+							name: nameSelector+"indextime",
 							path: "/bleve_explorer/indexes/"+ name  +"/index/index_time",
 							type: "rate",
 							color: "red",
 						},
 						{
 							display: "Analysis",
-							name: name+"analysistime",
+							name: nameSelector+"analysistime",
 							path: "/bleve_explorer/indexes/" + name  + "/index/analysis_time",
 							type: "rate",
 							color: "green",
@@ -108,7 +110,7 @@ function MonitorCtrl($scope, $http, $routeParams, $log, $sce, expvar) {
 					legend: true
 				},
 				{
-					name: name+"searches",
+					name: nameSelector+"searches",
 					display: "Searches",
 					path: "/bleve_explorer/indexes/"+ name  +"/searches",
 					type: "rate",
@@ -118,7 +120,7 @@ function MonitorCtrl($scope, $http, $routeParams, $log, $sce, expvar) {
 					yformatter: intFormatter
 				},
 				{
-					name: name+"searchtime",
+					name: nameSelector+"searchtime",
 					display: "Search Time",
 					path: "/bleve_explorer/indexes/"+ name  +"/search_time",
 					type: "rate",
@@ -130,8 +132,8 @@ function MonitorCtrl($scope, $http, $routeParams, $log, $sce, expvar) {
 		]
 		};
 
-		indexDivName = "index" + name;
-		indexPanel = '<div id="panel'+name+'" class="panel panel-default"><div class="panel-heading"><a data-toggle="collapse" data-target="#' + indexDivName + '">' + name + '</a></div><div id="' + indexDivName + '" class="panel-body collapse in"></div></div>';
+		indexDivName = "index" + nameSelector;
+		indexPanel = '<div id="panel'+nameSelector+'" class="panel panel-default"><div class="panel-heading"><a data-toggle="collapse" data-target="#' + indexDivName + '">' + name + '</a></div><div id="' + indexDivName + '" class="panel-body collapse in"></div></div>';
 		$(indexPanel).insertBefore('#indexchartend');
 
 		for (var i in idx.metrics) {
@@ -300,7 +302,7 @@ function MonitorCtrl($scope, $http, $routeParams, $log, $sce, expvar) {
 		$log.info("seriesdataend");
 
 		var graph = new Rickshaw.Graph({
-			element: document.querySelector("#"+metric.name),
+			element: document.querySelector('#'+metric.name),
 			width: "800",
 			height: "75",
 			renderer: "area",
