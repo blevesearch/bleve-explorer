@@ -45,9 +45,17 @@ func main() {
 
 	for _, dirInfo := range dirEntries {
 		indexPath := *dataDir + string(os.PathSeparator) + dirInfo.Name()
+
+		// skip single files in data dir since a valid index is a directory that
+		// contains multiple files
+		if !dirInfo.IsDir() {
+			log.Printf("not registering %s, skipping", indexPath)
+			continue
+		}
+
 		i, err := bleve.Open(indexPath)
 		if err != nil {
-			log.Printf("error opening index: %v", err)
+			log.Printf("error opening index %s: %v", indexPath, err)
 		} else {
 			log.Printf("registered index: %s", dirInfo.Name())
 			bleveHttp.RegisterIndexName(dirInfo.Name(), i)
