@@ -58,3 +58,21 @@
 }
 
 .rickshaw_graph .detail .x_label { display: none }
+
+.list-custom {
+  list-style-type: none;
+  padding-left: 0px;
+}
+
+.list-custom li {
+  padding-left: 15px;
+}
+
+.list-item {
+  padding: 3px;
+}
+
+span.selected {
+  background-color: lightgrey;
+  font-weight: bold;
+}

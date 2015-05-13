@@ -10,6 +10,9 @@
 package main
 
 import (
+	"encoding/json"
+	"io"
+	"log"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -21,6 +24,9 @@ func staticFileRouter() *mux.Router {
 
 	// static
 	r.PathPrefix("/static/").Handler(http.StripPrefix("/static/",
+		myFileHandler{http.FileServer(http.Dir(*staticPath))}))
+	// bootstrap ui insists on loading templates from this path
+	r.PathPrefix("/template/").Handler(http.StripPrefix("/template/",
 		myFileHandler{http.FileServer(http.Dir(*staticPath))}))
 
 	// application pages
@@ -71,4 +77,22 @@ func docIDLookup(req *http.Request) string {
 
 func indexNameLookup(req *http.Request) string {
 	return muxVariableLookup(req, "indexName")
+}
+
+func showError(w http.ResponseWriter, r *http.Request,
+	msg string, code int) {
+	log.Printf("Reporting error %v/%v", code, msg)
+	http.Error(w, msg, code)
+}
+
+func mustEncode(w io.Writer, i interface{}) {
+	if headered, ok := w.(http.ResponseWriter); ok {
+		headered.Header().Set("Cache-Control", "no-cache")
+		headered.Header().Set("Content-type", "application/json")
+	}
+
+	e := json.NewEncoder(w)
+	if err := e.Encode(i); err != nil {
+		panic(err)
+	}
 }

@@ -65,6 +65,19 @@ func main() {
 	// create a router to serve static files
 	router := staticFileRouter()
 
+	// first install handlers for mapping/analysis
+	router.HandleFunc("/api/_analyzerNames", ListAnalyzerNames).Methods("POST")
+	router.HandleFunc("/api/_datetimeParserNames", ListDateTimeParserNames).Methods("POST")
+	router.HandleFunc("/api/_charFilterNames", ListCharFilterNames).Methods("POST")
+	router.HandleFunc("/api/_charFilterTypes", ListCharFilterTypes).Methods("GET")
+	router.HandleFunc("/api/_tokenizerNames", ListTokenizerNames).Methods("POST")
+	router.HandleFunc("/api/_tokenizerTypes", ListTokenizerTypes).Methods("GET")
+	router.HandleFunc("/api/_tokenFilterNames", ListTokenFilterNames).Methods("POST")
+	router.HandleFunc("/api/_tokenFilterTypes", ListTokenFilterTypes).Methods("GET")
+	router.HandleFunc("/api/_tokenMapNames", ListTokenMapNames).Methods("POST")
+	router.HandleFunc("/api/_analyze", AnalyzerText).Methods("POST")
+	router.HandleFunc("/api/_validateMapping", ValidateMapping).Methods("POST")
+
 	// add the API
 	createIndexHandler := bleveHttp.NewCreateIndexHandler(*dataDir)
 	createIndexHandler.IndexNameLookup = indexNameLookup

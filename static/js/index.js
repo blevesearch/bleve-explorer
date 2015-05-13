@@ -166,20 +166,57 @@ function IndexCtrl($scope, $http, $routeParams, $log, $sce) {
 
 function IndexNewCtrl($scope, $http, $routeParams, $log, $sce, $location) {
 
-	$scope.errorMessage = null;
+	$scope.ierrorMessage = null;
+	$scope.mapping = {};
 
 	$scope.newIndexNamed = function(name, mapping) {
-		$scope.clearErrorMessage();
-		$http.put('/api/' + name, "").success(function(data) {
-			$location.path('/indexes/' + name);
-		}).
-		error(function(data, code) {
-			$scope.errorMessage = data;
-		});
+		if (!name) {
+			$scope.ierrorMessage = "Name is required";
+			return;
+		}
+		if (name) {
+			$scope.clearErrorMessage();
+			cleanMapping = $scope.fixupMapping($scope.mapping);
+			console.log(cleanMapping);
+			$http.put('/api/' + name, cleanMapping).success(function(data) {
+				$location.path('/indexes/' + name);
+			}).
+			error(function(data, code) {
+				$scope.ierrorMessage = data;
+			});
+		}
 	};
 
 	$scope.clearErrorMessage = function() {
-		$scope.errorMessage = null;
+		$scope.ierrorMessage = null;
+	};
+
+	$scope.fixupEmptyFields = function(m) {
+		keepFields = [];
+		for (var fieldIndex in m.fields) {
+			if (m.fields[fieldIndex].type !== '') {
+				keepFields.push(m.fields[fieldIndex]);
+			}
+		}
+		m.fields = keepFields;
+
+		// recurse through nested properties
+		for (var propertyName in m.properties) {
+			$scope.fixupEmptyFields(m.properties[propertyName]);
+		}
+	};
+
+	$scope.fixupMapping = function(m) {
+		// allegedly actually fast because most browsers have
+		// made json serialization/deserialization in native code
+		var newMapping = JSON.parse(JSON.stringify($scope.mapping));
+
+		$scope.fixupEmptyFields(newMapping.default_mapping);
+		for (var typeName in newMapping.types) {
+			$scope.fixupEmptyFields(newmapping.types[typeName]);
+		}
+
+		return newMapping;
 	};
 
 }

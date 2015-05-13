@@ -11,7 +11,7 @@
   <link href="/static/css/bootstrap.css" rel="stylesheet"/>
   <link href="/static/css/dashboard.css" rel="stylesheet"/>
   <link href="/static/css/rickshaw.min.css" rel="stylesheet"/>
-
+  <link href="/static/lib/angular-treeview/angular.treeview.css" rel="stylesheet"/>
 
   
    <link rel="shortcut icon" href="/static/favicon.ico" />
@@ -37,7 +37,7 @@
 
     
       <div class="row">
-        <div class="col-sm-10 col-sm-offset-1 main">
+        <div class="col-xs-12 col-xs-offset-0 main">
           <div ng-view></div>
         </div>
       </div>
@@ -46,12 +46,17 @@
 
 
   <script src="/static/lib/jquery/jquery-2.1.1.js"></script>
+  <script src="/static/lib/jquery/jquery-ui.min.js"></script>
   <script src="/static/lib/d3.v3.js"></script>
   <script src="/static/lib/rickshaw.min.js"></script>
   <script src="/static/lib/humanize.min.js"></script>
   <script src="/static/lib/bootstrap/bootstrap.js"></script>
   <script src="/static/lib/angular/angular.js"></script>
   <script src="/static/lib/angular-route/angular-route.js"></script>
+  <script src="/static/lib/angular-treeview/angular.treeview.min.js"></script>
+  <script src="/static/lib/angular/sortable.js"></script>
+  <script src="/static/lib/bootstrap/ui-bootstrap-tpls-0.11.0.min.js"></script>
+  <script src="/static/lib/angular/modal.js"></script>
   <script src="/static/lib/prism.js"></script>
   <script src="/static/lib/jsonpointer.js"></script>
   <script src="/static/js/expvar.js"></script>
@@ -62,6 +67,13 @@
   <script src="/static/js/directives.js"></script>
   <script src="/static/js/search.js"></script>
   <script src="/static/js/index.js"></script>
+  <script src="/static/js/mapping.js"></script>
+  <script src="/static/js/analysis.js"></script>
+  <script src="/static/js/analysis-analyzer.js"></script>
+  <script src="/static/js/analysis-wordlist.js"></script>
+  <script src="/static/js/analysis-charfilter.js"></script>
+  <script src="/static/js/analysis-tokenizer.js"></script>
+  <script src="/static/js/analysis-tokenfilter.js"></script>
   <script src="/static/js/monitor.js"></script>
 </body>
 </html>

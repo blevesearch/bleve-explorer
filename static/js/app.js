@@ -7,7 +7,12 @@ angular.module('myApp', [
   'myApp.services',
   'myApp.directives',
   'myApp.controllers',
-  'expvar'
+  'expvar',
+  'angularTreeview',
+  'ui.sortable',
+  'ui.bootstrap.transition',
+  'ui.bootstrap.modal',
+  'ui.bootstrap.tabs'
 ]).
 config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
   $routeProvider.when('/indexes/', {templateUrl: '/static/partials/index/list.html', controller: 'IndexesCtrl'});
@@ -17,4 +22,9 @@ config(['$routeProvider', '$locationProvider', function($routeProvider, $locatio
   $routeProvider.when('/monitor/', {templateUrl: '/static/partials/monitor.html', controller: 'MonitorCtrl'});
   $routeProvider.otherwise({redirectTo: '/indexes'});
   $locationProvider.html5Mode(true);
-}]);
+}]).run(function($rootScope){
+  //Just add a reference to some utility methods in rootscope.
+  $rootScope.Utils = {
+     keys : Object.keys
+  }
+});
