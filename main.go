@@ -17,8 +17,11 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/gorilla/mux"
+
 	"github.com/blevesearch/bleve"
 	bleveHttp "github.com/blevesearch/bleve/http"
+	bleveHttpMapping "github.com/blevesearch/bleve/http/mapping"
 )
 
 var bindAddr = flag.String("addr", ":8095", "http listen address")
@@ -62,21 +65,23 @@ func main() {
 		}
 	}
 
-	// create a router to serve static files
-	router := staticFileRouter()
+	router := mux.NewRouter()
+	router.StrictSlash(true)
 
-	// first install handlers for mapping/analysis
-	router.HandleFunc("/api/_analyzerNames", ListAnalyzerNames).Methods("POST")
-	router.HandleFunc("/api/_datetimeParserNames", ListDateTimeParserNames).Methods("POST")
-	router.HandleFunc("/api/_charFilterNames", ListCharFilterNames).Methods("POST")
-	router.HandleFunc("/api/_charFilterTypes", ListCharFilterTypes).Methods("GET")
-	router.HandleFunc("/api/_tokenizerNames", ListTokenizerNames).Methods("POST")
-	router.HandleFunc("/api/_tokenizerTypes", ListTokenizerTypes).Methods("GET")
-	router.HandleFunc("/api/_tokenFilterNames", ListTokenFilterNames).Methods("POST")
-	router.HandleFunc("/api/_tokenFilterTypes", ListTokenFilterTypes).Methods("GET")
-	router.HandleFunc("/api/_tokenMapNames", ListTokenMapNames).Methods("POST")
-	router.HandleFunc("/api/_analyze", AnalyzerText).Methods("POST")
-	router.HandleFunc("/api/_validateMapping", ValidateMapping).Methods("POST")
+	// first install handlers from bleve/http/mapping, for precedence
+	bleveHttpMappingStatic := http.FileServer(bleveHttpMapping.AssetFS())
+
+	router.PathPrefix("/static/partials/analysis").Handler(
+		http.StripPrefix("/static/", bleveHttpMappingStatic))
+	router.PathPrefix("/static/partials/mapping").Handler(
+		http.StripPrefix("/static/", bleveHttpMappingStatic))
+	router.PathPrefix("/static/js/mapping").Handler(
+		http.StripPrefix("/static/", bleveHttpMappingStatic))
+
+	bleveHttpMapping.RegisterHandlers(router, "/api")
+
+	// next, install our static file handlers
+	staticFileRouter(router)
 
 	// add the API
 	createIndexHandler := bleveHttp.NewCreateIndexHandler(*dataDir)

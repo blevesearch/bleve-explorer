@@ -18,10 +18,7 @@ import (
 	"github.com/gorilla/mux"
 )
 
-func staticFileRouter() *mux.Router {
-	r := mux.NewRouter()
-	r.StrictSlash(true)
-
+func staticFileRouter(r *mux.Router) *mux.Router {
 	// static
 	r.PathPrefix("/static/").Handler(http.StripPrefix("/static/",
 		myFileHandler{http.FileServer(http.Dir(*staticPath))}))
