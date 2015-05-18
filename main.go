@@ -71,6 +71,13 @@ func main() {
 	// first install handlers from bleve/http/mapping, for precedence
 	bleveHttpMappingStatic := http.FileServer(bleveHttpMapping.AssetFS())
 
+	staticPathDev := *staticPath + "../../bleve/http/mapping/mapping_static/"
+	fi, err := os.Stat(staticPathDev)
+	if err == nil && fi.IsDir() {
+		log.Printf("using dev static resources from %s", staticPathDev)
+		bleveHttpMappingStatic = http.FileServer(http.Dir(staticPathDev))
+    }
+
 	router.PathPrefix("/static/partials/analysis").Handler(
 		http.StripPrefix("/static/", bleveHttpMappingStatic))
 	router.PathPrefix("/static/partials/mapping").Handler(
