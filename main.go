@@ -22,6 +22,9 @@ import (
 	"github.com/blevesearch/bleve"
 	bleveHttp "github.com/blevesearch/bleve/http"
 	bleveHttpMapping "github.com/blevesearch/bleve/http/mapping"
+
+	// import general purpose configuration
+	_ "github.com/blevesearch/bleve/config"
 )
 
 var bindAddr = flag.String("addr", ":8095", "http listen address")
@@ -76,7 +79,7 @@ func main() {
 	if err == nil && fi.IsDir() {
 		log.Printf("using dev static resources from %s", staticPathDev)
 		bleveHttpMappingStatic = http.FileServer(http.Dir(staticPathDev))
-    }
+	}
 
 	router.PathPrefix("/static/partials/analysis").Handler(
 		http.StripPrefix("/static/", bleveHttpMappingStatic))
