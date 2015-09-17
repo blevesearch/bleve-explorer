@@ -13,6 +13,7 @@ Watch a [video introduction](https://www.youtube.com/watch?v=DfbRTXE5n4Y) to ble
 
 ## Building
 
+        go get
         go build -tags full
 
 The ```-tags full``` is optional, but includes all the optional components of bleve.
