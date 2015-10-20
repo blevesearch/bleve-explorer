@@ -21,7 +21,7 @@ import (
 
 	"github.com/blevesearch/bleve"
 	bleveHttp "github.com/blevesearch/bleve/http"
-	bleveHttpMapping "github.com/blevesearch/bleve/http/mapping"
+	bleveMappingUI "github.com/blevesearch/bleve-mapping-ui"
 
 	// import general purpose configuration
 	_ "github.com/blevesearch/bleve/config"
@@ -72,23 +72,18 @@ func main() {
 	router.StrictSlash(true)
 
 	// first install handlers from bleve/http/mapping, for precedence
-	bleveHttpMappingStatic := http.FileServer(bleveHttpMapping.AssetFS())
+	bleveMappingUIStatic := http.FileServer(bleveMappingUI.AssetFS())
 
-	staticPathDev := *staticPath + "../../bleve/http/mapping/mapping_static/"
+	staticPathDev := *staticPath + "../../bleve-mapping-ui/"
 	fi, err := os.Stat(staticPathDev)
 	if err == nil && fi.IsDir() {
 		log.Printf("using dev static resources from %s", staticPathDev)
-		bleveHttpMappingStatic = http.FileServer(http.Dir(staticPathDev))
+		bleveMappingUIStatic = http.FileServer(http.Dir(staticPathDev))
 	}
 
-	router.PathPrefix("/static/partials/analysis").Handler(
-		http.StripPrefix("/static/", bleveHttpMappingStatic))
-	router.PathPrefix("/static/partials/mapping").Handler(
-		http.StripPrefix("/static/", bleveHttpMappingStatic))
-	router.PathPrefix("/static/js/mapping").Handler(
-		http.StripPrefix("/static/", bleveHttpMappingStatic))
+	router.PathPrefix("/mapping_static").Handler(bleveMappingUIStatic)
 
-	bleveHttpMapping.RegisterHandlers(router, "/api")
+	bleveMappingUI.RegisterHandlers(router, "/api")
 
 	// next, install our static file handlers
 	staticFileRouter(router)
