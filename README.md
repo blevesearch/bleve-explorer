@@ -13,14 +13,14 @@ Watch a [video introduction](https://www.youtube.com/watch?v=DfbRTXE5n4Y) to ble
 
 ## Building
 
-        go build -tags full
+    go build -tags full
 
 The ```-tags full``` is optional, but includes all the optional components of bleve.
 
 ## Running
 
-		mkdir data
-        ./bleve-explorer
+    mkdir data
+    ./bleve-explorer
 
 This will use the default "data" dir for storing indexes.  Once started you can access the web UI at http://localhost:8095/
 
@@ -44,12 +44,12 @@ Bleve explorer uses the handlers provided by the  bleve.http package.  The handl
 
 In the [video introduction](https://www.youtube.com/watch?v=DfbRTXE5n4Y) to bleve-explorer I ran a script to load a directory of JSON documents.  Here is that script:
 
-		#!/bin/bash
+    #!/bin/bash
 
-		for JsonFile in  *.json
-		do
-			curl -X PUT http://localhost:8095/api/beer-search/$JsonFile -d @$JsonFile
-		done
+    for JsonFile in  *.json
+    do
+        curl -X PUT http://localhost:8095/api/beer-search/$JsonFile -d @$JsonFile
+    done
 
 ## Screenshots
 
