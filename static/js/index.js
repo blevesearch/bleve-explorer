@@ -190,11 +190,7 @@ function IndexNewCtrl($scope, $http, $routeParams, $log, $location, $uibModal) {
 	$scope.ierrorMessage = null;
 
     var imc = initBleveIndexMappingController(
-        $scope, $http, $log, $uibModal,
-        ['en', 'es', 'keyword', 'standard'],
-        ['julien', 'gregorian', 'yyyymmdd', 'dateTimeOptional'],
-        ['json'],
-        makeIndexMapping());
+        $scope, $http, $log, $uibModal, makeIndexMapping());
 
 	$scope.newIndexNamed = function(name) {
 		if (!name) {
