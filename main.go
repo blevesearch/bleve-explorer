@@ -72,16 +72,16 @@ func main() {
 	router.StrictSlash(true)
 
 	// first install handlers from bleve/http/mapping, for precedence
-	bleveMappingUIStatic := http.FileServer(bleveMappingUI.AssetFS())
+	staticBleveMapping := http.FileServer(bleveMappingUI.AssetFS())
 
 	staticPathDev := *staticPath + "../../bleve-mapping-ui/"
 	fi, err := os.Stat(staticPathDev)
 	if err == nil && fi.IsDir() {
 		log.Printf("using dev static resources from %s", staticPathDev)
-		bleveMappingUIStatic = http.FileServer(http.Dir(staticPathDev))
+		staticBleveMapping = http.FileServer(http.Dir(staticPathDev))
 	}
 
-	router.PathPrefix("/mapping_static").Handler(bleveMappingUIStatic)
+	router.PathPrefix("/static-bleve-mapping").Handler(staticBleveMapping)
 
 	bleveMappingUI.RegisterHandlers(router, "/api")
 
