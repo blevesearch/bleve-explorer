@@ -8,11 +8,11 @@ angular.module('myApp', [
   'myApp.directives',
   'myApp.controllers',
   'expvar',
-  'angularTreeview',
-  'ui.sortable',
-  'ui.bootstrap.transition',
+  'ui.tree',
+  'ui.bootstrap',
   'ui.bootstrap.modal',
-  'ui.bootstrap.tabs'
+  'ui.bootstrap.tabs',
+  'ui.sortable'
 ]).
 config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
   $routeProvider.when('/indexes/', {templateUrl: '/static/partials/index/list.html', controller: 'IndexesCtrl'});

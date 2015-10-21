@@ -43,7 +43,6 @@ function IndexCtrl($scope, $http, $routeParams, $log, $sce) {
 	}
 	$scope.tabPath = '/static/partials/index/tab-' + $scope.tab + '.html';
 	$scope.indexDetails = null;
-	
 
 	$scope.loadIndexDetails = function() {
 		$http.get('/api/' + $scope.indexName).success(function(data) {
@@ -164,59 +163,60 @@ function IndexCtrl($scope, $http, $routeParams, $log, $sce) {
 	};
 }
 
-function IndexNewCtrl($scope, $http, $routeParams, $log, $sce, $location) {
+function makeIndexMapping() {
+    return {
+        "types": {},
+        "default_mapping": {
+            "enabled": true,
+        },
+        "type_field": "_type",
+        "default_type": "_default",
+        "default_analyzer": "standard",
+        "default_datetime_parser": "dateTimeOptional",
+        "default_field": "_all",
+        "byte_array_converter": "json",
+        "analysis": {
+            "analyzers": {},
+            "char_filters": {},
+            "tokenizers": {},
+            "token_filters": {},
+            "token_maps": {}
+        }
+    };
+};
+
+function IndexNewCtrl($scope, $http, $routeParams, $log, $location, $uibModal) {
 
 	$scope.ierrorMessage = null;
-	$scope.mapping = {};
 
-	$scope.newIndexNamed = function(name, mapping) {
+    var imc = initBleveIndexMappingController(
+        $scope, $http, $log, $uibModal,
+        ['en', 'es', 'keyword', 'standard'],
+        ['julien', 'gregorian', 'yyyymmdd', 'dateTimeOptional'],
+        ['json'],
+        makeIndexMapping());
+
+	$scope.newIndexNamed = function(name) {
 		if (!name) {
 			$scope.ierrorMessage = "Name is required";
 			return;
 		}
-		if (name) {
-			$scope.clearErrorMessage();
-			cleanMapping = $scope.fixupMapping($scope.mapping);
-			console.log(cleanMapping);
-			$http.put('/api/' + name, cleanMapping).success(function(data) {
-				$location.path('/indexes/' + name);
-			}).
+
+		$scope.clearErrorMessage();
+
+		cleanMapping = imc.indexMapping();
+		console.log(cleanMapping);
+
+		$http.put('/api/' + name, cleanMapping).
+            success(function(data) {
+			    $location.path('/indexes/' + name);
+		    }).
 			error(function(data, code) {
 				$scope.ierrorMessage = data;
 			});
-		}
 	};
 
 	$scope.clearErrorMessage = function() {
 		$scope.ierrorMessage = null;
 	};
-
-	$scope.fixupEmptyFields = function(m) {
-		keepFields = [];
-		for (var fieldIndex in m.fields) {
-			if (m.fields[fieldIndex].type !== '') {
-				keepFields.push(m.fields[fieldIndex]);
-			}
-		}
-		m.fields = keepFields;
-
-		// recurse through nested properties
-		for (var propertyName in m.properties) {
-			$scope.fixupEmptyFields(m.properties[propertyName]);
-		}
-	};
-
-	$scope.fixupMapping = function(m) {
-		// allegedly actually fast because most browsers have
-		// made json serialization/deserialization in native code
-		var newMapping = JSON.parse(JSON.stringify($scope.mapping));
-
-		$scope.fixupEmptyFields(newMapping.default_mapping);
-		for (var typeName in newMapping.types) {
-			$scope.fixupEmptyFields(newmapping.types[typeName]);
-		}
-
-		return newMapping;
-	};
-
 }

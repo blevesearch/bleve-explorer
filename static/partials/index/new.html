@@ -15,13 +15,13 @@
     </div>
   </div>
 
-  <div ng-controller="MappingCtrl" ng-include="'/static/partials/mapping/mapping.html'"/>
+  <div ng-include="'/mapping_static/partials/mapping/index-mapping.html'"/>
 
   <hr/>
 
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
-      <button ng-click="newIndexNamed(newIndexName, mapping)" type="submit" class="btn btn-primary pull-right">Create</button>
+      <button ng-click="newIndexNamed(newIndexName)" type="submit" class="btn btn-primary pull-right">Create</button>
     </div>
   </div>
 </form>

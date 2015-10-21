@@ -1,22 +1,21 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="myApp">
+<html lang="en">
 <head>
-  <meta charset="utf-8">
   <title>Bleve Explorer</title>
+  <meta charset="utf-8">
   <meta name="description" content="">
-  <!-- Bootstrap -->
-  <link href="/static/css/prism.css" rel="stylesheet"/>
+  <base href="/">
 
   <link href="/static/css/app.css" rel="stylesheet"/>
+  <link href="/static/css/prism.css" rel="stylesheet"/>
   <link href="/static/css/bootstrap.css" rel="stylesheet"/>
   <link href="/static/css/dashboard.css" rel="stylesheet"/>
   <link href="/static/css/rickshaw.min.css" rel="stylesheet"/>
-  <link href="/static/lib/angular-treeview/angular.treeview.css" rel="stylesheet"/>
   <link href="/static/lib/angular-ui-tree/dist/angular-ui-tree.min.css" rel="stylesheet"/>
 
   <link rel="shortcut icon" href="/static/favicon.ico" />
 </head>
-<body>
+<body ng-app="myApp">
     <div class="container">
       <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
@@ -39,6 +38,7 @@
         </div>
       </div>
     </div>
+</body>
 
   <script src="/static/lib/jquery/jquery-2.1.1.js"></script>
   <script src="/static/lib/jquery/jquery-ui.min.js"></script>
@@ -48,23 +48,12 @@
   <script src="/static/lib/bootstrap/bootstrap.js"></script>
   <script src="/static/lib/angular/angular.js"></script>
   <script src="/static/lib/angular-route/angular-route.js"></script>
-  <script src="/static/lib/angular-treeview/angular.treeview.min.js"></script>
+  <script src="/static/lib/angular-bootstrap/ui-bootstrap.min.js"></script>
+  <script src="/static/lib/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
   <script src="/static/lib/angular-ui-tree/dist/angular-ui-tree.min.js"></script>
   <script src="/static/lib/angular/sortable.js"></script>
-  <script src="/static/lib/bootstrap/ui-bootstrap-tpls-0.11.0.min.js"></script>
-  <script src="/static/lib/angular/modal.js"></script>
   <script src="/static/lib/prism.js"></script>
   <script src="/static/lib/jsonpointer.js"></script>
-
-  <script src="/static/js/expvar.js"></script>
-  <script src="/static/js/app.js"></script>
-  <script src="/static/js/services.js"></script>
-  <script src="/static/js/controllers.js"></script>
-  <script src="/static/js/filters.js"></script>
-  <script src="/static/js/directives.js"></script>
-  <script src="/static/js/search.js"></script>
-  <script src="/static/js/index.js"></script>
-  <script src="/static/js/monitor.js"></script>
 
   <script src="/mapping_static/js/mapping/index-mapping.js"></script>
   <script src="/mapping_static/js/mapping/type-mapping.js"></script>
@@ -75,5 +64,16 @@
   <script src="/mapping_static/js/mapping/analysis-charfilter.js"></script>
   <script src="/mapping_static/js/mapping/analysis-tokenizer.js"></script>
   <script src="/mapping_static/js/mapping/analysis-tokenfilter.js"></script>
-</body>
+
+  <script src="/static/js/expvar.js"></script>
+
+  <script src="/static/js/index.js"></script>
+  <script src="/static/js/monitor.js"></script>
+  <script src="/static/js/search.js"></script>
+
+  <script src="/static/js/app.js"></script>
+  <script src="/static/js/services.js"></script>
+  <script src="/static/js/controllers.js"></script>
+  <script src="/static/js/filters.js"></script>
+  <script src="/static/js/directives.js"></script>
 </html>
