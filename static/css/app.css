@@ -76,3 +76,21 @@ span.selected {
   background-color: lightgrey;
   font-weight: bold;
 }
+
+.indexMappingContainer .section {
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+.indexMappingContainer .sectionBody {
+  padding-top: 10px;
+  padding-left: 20px;
+}
+
+.indexMappingContainer .sectionBody.typeMappingsSection {
+  padding-bottom: 40px;
+}
+
+.indexMappingContainer .sectionBody.propertiesSection {
+  padding-left: 40px;
+}
