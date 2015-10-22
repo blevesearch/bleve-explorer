@@ -32,22 +32,26 @@ function IndexesCtrl($scope, $http, $routeParams, $log, $sce) {
 	$scope.refreshIndexNames();
 }
 
-function IndexCtrl($scope, $http, $routeParams, $log, $sce) {
+function IndexCtrl($scope, $http, $routeParams, $log, $sce, $uibModal) {
 
 	$scope.indexName = $routeParams.indexName;
 	$scope.indexDocCount = 0;
+	$scope.indexDetails = null;
 	$scope.mappingFormatted = "";
+    $scope.viewOnly = true;
+
 	$scope.tab = $routeParams.tabName;
 	if($scope.tab === undefined || $scope.tab === "") {
 		$scope.tab = "summary";
 	}
 	$scope.tabPath = '/static/partials/index/tab-' + $scope.tab + '.html';
-	$scope.indexDetails = null;
 
 	$scope.loadIndexDetails = function() {
 		$http.get('/api/' + $scope.indexName).success(function(data) {
             $scope.indexDetails = data;
             $scope.mappingFormatted = JSON.stringify(data.mapping, undefined, 2);
+
+            initBleveIndexMappingController($scope, $http, $log, $uibModal, data.mapping);
         }).
         error(function(data, code) {
 			$scope.errorMessage = data;
@@ -65,11 +69,10 @@ function IndexCtrl($scope, $http, $routeParams, $log, $sce) {
 
 	// always load the details
 	$scope.loadIndexDetails();
+
 	// tab specific loading
 	if($scope.tab === "summary") {
 		$scope.loadIndexDocCount();
-	} else if ($scope.tab === "mapping") {
-
 	}
 
 	$scope.indexDocument = function(id, body) {
