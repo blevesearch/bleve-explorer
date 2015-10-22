@@ -20,8 +20,8 @@ import (
 	"github.com/gorilla/mux"
 
 	"github.com/blevesearch/bleve"
-	bleveHttp "github.com/blevesearch/bleve/http"
 	bleveMappingUI "github.com/blevesearch/bleve-mapping-ui"
+	bleveHttp "github.com/blevesearch/bleve/http"
 
 	// import general purpose configuration
 	_ "github.com/blevesearch/bleve/config"
@@ -81,7 +81,8 @@ func main() {
 		staticBleveMapping = http.FileServer(http.Dir(staticPathDev))
 	}
 
-	router.PathPrefix("/static-bleve-mapping").Handler(staticBleveMapping)
+	router.PathPrefix("/static-bleve-mapping/").
+		Handler(http.StripPrefix("/static-bleve-mapping/", staticBleveMapping))
 
 	bleveMappingUI.RegisterHandlers(router, "/api")
 
@@ -143,5 +144,4 @@ func main() {
 	http.Handle("/", router)
 	log.Printf("Listening on %v", *bindAddr)
 	log.Fatal(http.ListenAndServe(*bindAddr, nil))
-
 }
