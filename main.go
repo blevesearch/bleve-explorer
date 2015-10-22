@@ -99,11 +99,7 @@ func main() {
 		}
 	}
 
-	router.PathPrefix("/static/").
-		Handler(http.StripPrefix("/static/", static))
-
-	// add redirects, rewrites, etc
-	staticFileRouter(router)
+	staticFileRouter(router, static)
 
 	// add the API
 	bleveMappingUI.RegisterHandlers(router, "/api")
