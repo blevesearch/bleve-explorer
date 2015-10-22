@@ -2,7 +2,9 @@
 <pre nag-prism source="{{mappingFormatted}}"
      class="language-javascript"></pre>
 
-<div ng-if="indexDetails"
-     class="indexMappingContainer">
-  <div ng-include="'/static-bleve-mapping/partials/mapping/index-mapping.html'"/>
+<div class="viewOnlyIndexMappingContainer">
+  <div ng-if="indexDetails"
+       class="indexMappingContainer">
+    <div ng-include="'/static-bleve-mapping/partials/mapping/index-mapping.html'"/>
+  </div>
 </div>

@@ -98,3 +98,7 @@ span.selected {
 .indexMappingContainer .addTypeMapping {
   margin-bottom: 5px;
 }
+
+.viewOnlyIndexMappingContainer {
+  margin-top: 40px;
+}
