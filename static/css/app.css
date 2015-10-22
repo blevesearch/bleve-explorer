@@ -29,9 +29,8 @@
     margin-left: -15px;
   }
 }
-
 .navbar-inverse .overide-brand {
-	color: white;
+  color: white;
 }
 
 .swatch {
@@ -56,7 +55,6 @@
 .rickshaw_graph .detail {
   background: none;
 }
-
 .rickshaw_graph .detail .x_label { display: none }
 
 .list-custom {
@@ -97,10 +95,6 @@ span.selected {
 
 .indexMappingContainer .addTypeMapping {
   margin-bottom: 5px;
-}
-
-.indexMappingContainer .modal-body .form-group {
-  padding-bottom: 10px;
 }
 
 .indexMappingContainer .angular-ui-tree-handle {
@@ -207,4 +201,8 @@ span.selected {
   font-weight: normal;
   white-space: nowrap;
   z-index: 100;
+}
+
+.modal-body .form-group {
+  padding-bottom: 5px;
 }
