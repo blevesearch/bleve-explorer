@@ -9,6 +9,9 @@
 
 package main
 
+//go:generate go-bindata-assetfs -pkg=main ./static/...
+//go:generate go fmt .
+
 import (
 	"encoding/json"
 	"io"

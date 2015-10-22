@@ -29,8 +29,12 @@ import (
 
 var bindAddr = flag.String("addr", ":8095", "http listen address")
 var dataDir = flag.String("dataDir", "data", "data directory")
-var staticEtag = flag.String("staticEtag", "", "A static etag value.")
-var staticPath = flag.String("static", "static/", "Path to the static content")
+var staticEtag = flag.String("staticEtag", "", "optional static etag value.")
+var staticPath = flag.String("static", "static/",
+	"optional path to static directory for web resources")
+var staticBleveMappingPath = flag.String("staticBleveMapping", "",
+	"optional path to static-bleve-mapping directory for web resources")
+
 var expvars = expvar.NewMap("stats")
 
 func init() {
@@ -38,7 +42,6 @@ func init() {
 }
 
 func main() {
-
 	flag.Parse()
 
 	// walk the data dir and register index names
@@ -72,18 +75,17 @@ func main() {
 	router.StrictSlash(true)
 
 	// first install handlers from bleve/http/mapping, for precedence
-	staticBleveMapping :=
-		http.StripPrefix("/static-bleve-mapping/",
-			http.FileServer(bleveMappingUI.AssetFS()))
+	staticBleveMapping := http.FileServer(bleveMappingUI.AssetFS())
 
-	staticPathDev := *staticPath + "../../bleve-mapping-ui/"
-	fi, err := os.Stat(staticPathDev)
+	fi, err := os.Stat(*staticBleveMappingPath)
 	if err == nil && fi.IsDir() {
-		log.Printf("using dev static resources from %s", staticPathDev)
-		staticBleveMapping = http.FileServer(http.Dir(staticPathDev))
+		log.Printf("using static-bleve-mapping resources from %s",
+			*staticBleveMappingPath)
+		staticBleveMapping = http.FileServer(http.Dir(*staticBleveMappingPath))
 	}
 
-	router.PathPrefix("/static-bleve-mapping/").Handler(staticBleveMapping)
+	router.PathPrefix("/static-bleve-mapping/").
+		Handler(http.StripPrefix("/static-bleve-mapping/", staticBleveMapping))
 
 	bleveMappingUI.RegisterHandlers(router, "/api")
 
