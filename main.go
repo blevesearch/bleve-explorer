@@ -30,7 +30,7 @@ import (
 var bindAddr = flag.String("addr", ":8095", "http listen address")
 var dataDir = flag.String("dataDir", "data", "data directory")
 var staticEtag = flag.String("staticEtag", "", "optional static etag value.")
-var staticPath = flag.String("static", "static/",
+var staticPath = flag.String("static", "",
 	"optional path to static directory for web resources")
 var staticBleveMappingPath = flag.String("staticBleveMapping", "",
 	"optional path to static-bleve-mapping directory for web resources")
@@ -74,25 +74,40 @@ func main() {
 	router := mux.NewRouter()
 	router.StrictSlash(true)
 
-	// first install handlers from bleve/http/mapping, for precedence
+	// default to bindata for static-bleve-mapping resources.
 	staticBleveMapping := http.FileServer(bleveMappingUI.AssetFS())
-
-	fi, err := os.Stat(*staticBleveMappingPath)
-	if err == nil && fi.IsDir() {
-		log.Printf("using static-bleve-mapping resources from %s",
-			*staticBleveMappingPath)
-		staticBleveMapping = http.FileServer(http.Dir(*staticBleveMappingPath))
+	if *staticBleveMappingPath != "" {
+		fi, err := os.Stat(*staticBleveMappingPath)
+		if err == nil && fi.IsDir() {
+			log.Printf("using static-bleve-mapping resources from %s",
+				*staticBleveMappingPath)
+			staticBleveMapping = http.FileServer(http.Dir(*staticBleveMappingPath))
+		}
 	}
 
 	router.PathPrefix("/static-bleve-mapping/").
 		Handler(http.StripPrefix("/static-bleve-mapping/", staticBleveMapping))
 
-	bleveMappingUI.RegisterHandlers(router, "/api")
+	// default to bindata for static resources.
+	static := http.FileServer(assetFS())
+	if *staticPath != "" {
+		fi, err := os.Stat(*staticPath)
+		if err == nil && fi.IsDir() {
+			log.Printf("using static resources from %s",
+				*staticPath)
+			static = http.FileServer(http.Dir(*staticPath))
+		}
+	}
 
-	// next, install our static file handlers
+	router.PathPrefix("/static/").
+		Handler(http.StripPrefix("/static/", static))
+
+	// add redirects, rewrites, etc
 	staticFileRouter(router)
 
 	// add the API
+	bleveMappingUI.RegisterHandlers(router, "/api")
+
 	createIndexHandler := bleveHttp.NewCreateIndexHandler(*dataDir)
 	createIndexHandler.IndexNameLookup = indexNameLookup
 	router.Handle("/api/{indexName}", createIndexHandler).Methods("PUT")
