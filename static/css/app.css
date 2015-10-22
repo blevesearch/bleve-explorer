@@ -94,3 +94,7 @@ span.selected {
 .indexMappingContainer .sectionBody.propertiesSection {
   padding-left: 40px;
 }
+
+.indexMappingContainer .addTypeMapping {
+  margin-bottom: 5px;
+}
