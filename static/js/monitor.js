@@ -68,7 +68,7 @@ function MonitorCtrl($scope, $http, $routeParams, $log, $sce, expvar) {
 				{
 					name: nameSelector+"updates",
 					display: "Updates",
-					path: "/bleve_explorer/indexes/" + name  + "/index/updates",
+					path: "/bleve/indexes/" + name  + "/index/updates",
 					type: "rate",
 					color: "steelblue",
 					yaxis: Rickshaw.Fixtures.Number.formatKMBT,
@@ -78,7 +78,7 @@ function MonitorCtrl($scope, $http, $routeParams, $log, $sce, expvar) {
 				{
 					name: nameSelector+"deletes",
 					display: "Deletes",
-					path: "/bleve_explorer/indexes/"+ name  +"/index/deletes",
+					path: "/bleve/indexes/"+ name  +"/index/deletes",
 					type: "rate",
 					color: "steelblue",
 					yaxis: Rickshaw.Fixtures.Number.formatKMBT,
@@ -92,14 +92,14 @@ function MonitorCtrl($scope, $http, $routeParams, $log, $sce, expvar) {
 						{
 							display: "Index",
 							name: nameSelector+"indextime",
-							path: "/bleve_explorer/indexes/"+ name  +"/index/index_time",
+							path: "/bleve/indexes/"+ name  +"/index/index_time",
 							type: "rate",
 							color: "red",
 						},
 						{
 							display: "Analysis",
 							name: nameSelector+"analysistime",
-							path: "/bleve_explorer/indexes/" + name  + "/index/analysis_time",
+							path: "/bleve/indexes/" + name  + "/index/analysis_time",
 							type: "rate",
 							color: "green",
 						}
@@ -112,7 +112,7 @@ function MonitorCtrl($scope, $http, $routeParams, $log, $sce, expvar) {
 				{
 					name: nameSelector+"searches",
 					display: "Searches",
-					path: "/bleve_explorer/indexes/"+ name  +"/searches",
+					path: "/bleve/indexes/"+ name  +"/searches",
 					type: "rate",
 					color: "steelblue",
 					yaxis: Rickshaw.Fixtures.Number.formatKMBT,
@@ -122,7 +122,7 @@ function MonitorCtrl($scope, $http, $routeParams, $log, $sce, expvar) {
 				{
 					name: nameSelector+"searchtime",
 					display: "Search Time",
-					path: "/bleve_explorer/indexes/"+ name  +"/search_time",
+					path: "/bleve/indexes/"+ name  +"/search_time",
 					type: "rate",
 					color: "steelblue",
 					yaxis: Rickshaw.Fixtures.Number.formatKMBT,
@@ -253,7 +253,7 @@ function MonitorCtrl($scope, $http, $routeParams, $log, $sce, expvar) {
 	};
 
 
-	expvar.addKeysLookup("indexes", "/bleve_explorer/indexes");
+	expvar.addKeysLookup("indexes", "/bleve/indexes");
 
 	for (var categoryName in $scope.metrics) {
 		category = $scope.metrics[categoryName];

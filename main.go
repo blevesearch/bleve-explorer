@@ -10,7 +10,6 @@
 package main
 
 import (
-	"expvar"
 	"flag"
 	"io/ioutil"
 	"log"
@@ -35,12 +34,6 @@ var staticPath = flag.String("static", "",
 var staticBleveMappingPath = flag.String("staticBleveMapping", "",
 	"optional path to static-bleve-mapping directory for web resources")
 
-var expvars = expvar.NewMap("stats")
-
-func init() {
-	expvar.Publish("bleve_explorer", expvars)
-}
-
 func main() {
 	flag.Parse()
 
@@ -49,8 +42,6 @@ func main() {
 	if err != nil {
 		log.Fatalf("error reading data dir: %v", err)
 	}
-
-	expvars.Set("indexes", bleveHttp.IndexStats())
 
 	for _, dirInfo := range dirEntries {
 		indexPath := *dataDir + string(os.PathSeparator) + dirInfo.Name()
@@ -68,6 +59,8 @@ func main() {
 		} else {
 			log.Printf("registered index: %s", dirInfo.Name())
 			bleveHttp.RegisterIndexName(dirInfo.Name(), i)
+			// set correct name in stats
+			i.SetName(dirInfo.Name())
 		}
 	}
 
