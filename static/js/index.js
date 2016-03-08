@@ -184,7 +184,9 @@ function makeIndexMapping() {
             "tokenizers": {},
             "token_filters": {},
             "token_maps": {}
-        }
+        },
+        "store_dynamic": true,
+        "index_dynamic": true
     };
 };
 
