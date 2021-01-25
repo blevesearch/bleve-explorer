@@ -18,12 +18,12 @@ import (
 
 	"github.com/gorilla/mux"
 
-	"github.com/blevesearch/bleve"
+	"github.com/blevesearch/bleve/v2"
 	bleveMappingUI "github.com/blevesearch/bleve-mapping-ui"
-	bleveHttp "github.com/blevesearch/bleve/http"
+	bleveHttp "github.com/blevesearch/bleve/v2/http"
 
 	// import general purpose configuration
-	_ "github.com/blevesearch/bleve/config"
+	_ "github.com/blevesearch/bleve/v2/config"
 )
 
 var bindAddr = flag.String("addr", ":8095", "http listen address")
