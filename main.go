@@ -26,15 +26,12 @@ import (
 )
 
 var (
-	bindAddr   = flag.String("addr", ":8095", "http listen address")
-	dataDir    = flag.String("dataDir", "data", "data directory")
-	staticEtag = flag.String("staticEtag", "", "optional static etag value.")
-	staticPath = flag.String("static", "",
-		"optional path to static directory for web resources")
+	bindAddr               = flag.String("addr", ":8095", "http listen address")
+	dataDir                = flag.String("dataDir", "data", "data directory")
+	staticEtag             = flag.String("staticEtag", "", "optional static etag value.")
+	staticPath             = flag.String("static", "", "optional path to static directory for web resources")
+	staticBleveMappingPath = flag.String("staticBleveMapping", "", "optional path to static-bleve-mapping directory for web resources")
 )
-
-var staticBleveMappingPath = flag.String("staticBleveMapping", "",
-	"optional path to static-bleve-mapping directory for web resources")
 
 func main() {
 	flag.Parse()
