@@ -11,26 +11,28 @@ package main
 
 import (
 	"flag"
-	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
 
 	"github.com/gorilla/mux"
 
-	"github.com/blevesearch/bleve/v2"
 	bleveMappingUI "github.com/blevesearch/bleve-mapping-ui"
+	"github.com/blevesearch/bleve/v2"
 	bleveHttp "github.com/blevesearch/bleve/v2/http"
 
 	// import general purpose configuration
 	_ "github.com/blevesearch/bleve/v2/config"
 )
 
-var bindAddr = flag.String("addr", ":8095", "http listen address")
-var dataDir = flag.String("dataDir", "data", "data directory")
-var staticEtag = flag.String("staticEtag", "", "optional static etag value.")
-var staticPath = flag.String("static", "",
-	"optional path to static directory for web resources")
+var (
+	bindAddr   = flag.String("addr", ":8095", "http listen address")
+	dataDir    = flag.String("dataDir", "data", "data directory")
+	staticEtag = flag.String("staticEtag", "", "optional static etag value.")
+	staticPath = flag.String("static", "",
+		"optional path to static directory for web resources")
+)
+
 var staticBleveMappingPath = flag.String("staticBleveMapping", "",
 	"optional path to static-bleve-mapping directory for web resources")
 
@@ -38,7 +40,7 @@ func main() {
 	flag.Parse()
 
 	// walk the data dir and register index names
-	dirEntries, err := ioutil.ReadDir(*dataDir)
+	dirEntries, err := os.ReadDir(*dataDir)
 	if err != nil {
 		log.Fatalf("error reading data dir: %v", err)
 	}
