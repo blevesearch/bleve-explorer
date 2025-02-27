@@ -40,7 +40,7 @@ func staticFileRouter(r *mux.Router, static http.Handler) *mux.Router {
 		r.PathPrefix(p).Handler(RewriteURL("/", static))
 	}
 
-	r.Handle("/", http.RedirectHandler("/static/index.html", 302))
+	r.Handle("/", http.RedirectHandler("/static/index.html", http.StatusFound))
 
 	return r
 }
