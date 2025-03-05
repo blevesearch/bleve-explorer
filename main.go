@@ -20,7 +20,7 @@ import (
 
 	bleveMappingUI "github.com/blevesearch/bleve-mapping-ui"
 	"github.com/blevesearch/bleve/v2"
-	bleveHttp "github.com/blevesearch/bleve/v2/http"
+	bleveHttp "github.com/blevesearch/bleve-explorer/http"
 
 	// import general purpose configuration
 	_ "github.com/blevesearch/bleve/v2/config"

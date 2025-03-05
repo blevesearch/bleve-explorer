@@ -5,6 +5,7 @@ go 1.21
 require (
 	github.com/blevesearch/bleve-mapping-ui v0.5.3
 	github.com/blevesearch/bleve/v2 v2.4.4
+	github.com/blevesearch/bleve_index_api v1.1.12
 	github.com/elazarl/go-bindata-assetfs v1.0.1
 	github.com/gorilla/mux v1.8.0
 )
@@ -12,7 +13,6 @@ require (
 require (
 	github.com/RoaringBitmap/roaring v1.9.3 // indirect
 	github.com/bits-and-blooms/bitset v1.12.0 // indirect
-	github.com/blevesearch/bleve_index_api v1.1.12 // indirect
 	github.com/blevesearch/geo v0.1.20 // indirect
 	github.com/blevesearch/go-faiss v1.0.24 // indirect
 	github.com/blevesearch/go-porterstemmer v1.0.3 // indirect
